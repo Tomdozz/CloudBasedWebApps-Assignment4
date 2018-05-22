@@ -14,6 +14,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('/products','ProductController');
+Route::resource('/orders','OrderController');
+Route::resource('/ordersinprog','OrderInProgController');
 
 Auth::routes();
 

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Order;
+use App\OrderInProg;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $orders = Order::all();
+        $ordersInProg = OrderInProg::all();
+        return view('home', ["orders"=>$orders,"ordersInProg"=>$ordersInProg]);
     }
 }

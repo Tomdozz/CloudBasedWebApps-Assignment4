@@ -16,6 +16,7 @@ class OrderTableSeeder extends Seeder
        [
          "title"=>"Kniv",
          "name"=>"Karl johan",
+         "email"=>"kalle@knivfantast.se",
          "phonenumber"=>"123456789",
          "image"=>"http:\/\/www.three.co.uk\/static\/images\/device_pages\/MobileVersion\/Apple\/iPhone_5s\/Space_Grey\/desktop\/1.jpg",
          "description"=>"En kniv med hantag av ädelträ, måtten på bladet ska vara ca 13cm",

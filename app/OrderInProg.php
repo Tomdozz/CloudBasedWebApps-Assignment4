@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Order;
 class OrderInProg extends Model
 {
+  protected $table = "orderinprogs";
   public function getOrder(){
-    return $this->orders;
+    return $table->orders;
   }
 }

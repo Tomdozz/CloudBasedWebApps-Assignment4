@@ -18,6 +18,7 @@ class CreateOrderTable extends Migration
             $table->text('title');
             $table->text('image');
             $table->text('name');
+            $table->text('email');
             $table->text('phonenumber');
             $table->text('description');
             $table->integer('maxprice');
