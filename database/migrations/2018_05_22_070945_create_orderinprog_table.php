@@ -16,6 +16,7 @@ class CreateOrderinprogTable extends Migration
         Schema::create('orderinprogs', function (Blueprint $table) {
           $table->increments('id');
           $table->text('title');
+          $table->text('image');
           $table->text('description');
           $table->text('expecteddate');
           $table->text('timesincestart');
