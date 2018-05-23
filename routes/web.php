@@ -17,6 +17,7 @@ Route::resource('/products','ProductController');
 Route::resource('/orders','OrderController');
 Route::resource('/ordersinprog','OrderInProgController');
 Route::resource('/cost','CostController');
+Route::get('/editProduct', 'ProductController@handleProducts')->name('editPage');
 
 Auth::routes();
 

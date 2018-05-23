@@ -32,6 +32,10 @@ a:hover {
         <hr>
         <a class="" href="{{ route('products.create') }}">Skapa ny produkt<span class="sr-only">(current)</span></a>
         <hr>
+        <a class="" href="{{ route('editPage') }}" >Hantera produkter<span class="sr-only">(current)</span></a>
+        <hr>
+        <a class="" href="{{ route('orders.index') }}" >Hantera produkter<span class="sr-only">(current)</span></a>
+        <hr>
         <!--<a class="" href="{{ route('products.create') }}">Redigera order<span class="sr-only">(current)</span></a>-->
     </div>
     <div class="col-md-10">
