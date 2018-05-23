@@ -8,7 +8,7 @@ class OrderInProg extends Model
 {
   protected $table = "orderinprogs";
   public function orders(){
-    return $this->belongsToOne('App\Order');
+    return $table->belongsTo('App/Order');
   }
   public function getOrder(){
     return $table->orders;

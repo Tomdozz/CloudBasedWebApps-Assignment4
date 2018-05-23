@@ -17,7 +17,6 @@ i{
             <i>Telefonnummer: {{$order->phonenumber}}</i><br>
             <i>E-post: {{$order->email}}</i><br>
             <p>Berskrivning från beställare: {{$order->description}}</p>
-            {{$order->orderInProg}}
           </li>
         @endforeach
       </ul>

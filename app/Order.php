@@ -7,6 +7,6 @@ use App\OrderInProg;
 class Order extends Model
 {
   public function orderInProg(){
-    return $this->hasOne('App\OrderInProg');
+    return $this->hasOne('App/OrderInProg');
   }
 }
