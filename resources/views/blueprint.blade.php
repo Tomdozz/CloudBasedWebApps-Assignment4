@@ -32,9 +32,9 @@
             <a class="nav-link" href="{{ route('orders.index') }}">Lägg order<span class="sr-only">(current)</span></a>
           </li>
           @auth
-          <li class="nav-item active">
+          <!--<li class="nav-item active">
             <a class="nav-link" href="{{ route('products.create') }}">Skapa ny produkt<span class="sr-only">(current)</span></a>
-          </li>
+          </li>-->
           @endauth
       </nav>
       @if (Route::has('login'))

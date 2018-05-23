@@ -16,6 +16,7 @@ Route::get('/', function () {
 Route::resource('/products','ProductController');
 Route::resource('/orders','OrderController');
 Route::resource('/ordersinprog','OrderInProgController');
+Route::resource('/cost','CostController');
 
 Auth::routes();
 

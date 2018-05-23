@@ -15,6 +15,12 @@ class CreateCostsTable extends Migration
     {
         Schema::create('costs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('order_id');
+            $table->integer('worktime');
+            $table->integer('meterialcost');
+            $table->integer('hourcost');
+            $table->integer('totalcost');
+            $table->text('notes');
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class CreateOrderinprogTable extends Migration
           $table->increments('id');
           $table->text('title');
           $table->text('image');
+          $table->integer('order_id');
           $table->text('description');
           $table->text('expecteddate');
           $table->text('timesincestart');

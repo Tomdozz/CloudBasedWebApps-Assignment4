@@ -11,13 +11,18 @@ class OrderinprogTableSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('order_orderinprog')->insert([
-           [
-             'order_id'=> 1,
-             'orderinprog_id'=> 1,
-             "created_at"=>date("Y-m-d H:i:s"),
-             "updated_at"=>date("Y-m-d H:i:s")
-           ]
-         ]);
+      DB::table('orderinprogs')->insert(
+     [
+       [
+         "title"=>"Kniv",
+         "image"=>"https://teq  uals0.files.wordpress.com/2012/01/p1010940.jpg",
+         "order_id"=>1,
+         "description"=>"Just nu är bladet klart och härdas i väntan på att ädelträhantagt ska slipas",
+         "expecteddate"=>"23/7-18",
+         "timesincestart"=>"för länge",
+         "created_at"=>date("Y-m-d H:i:s"),
+         "updated_at"=>date("Y-m-d H:i:s")
+       ]
+     ]);
     }
 }
