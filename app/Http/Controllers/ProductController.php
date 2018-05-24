@@ -13,10 +13,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $order = Order::all();
-      //\Log::info('We are in INDEX function.');
-      return view("order.index", [
-        "orders" => $order
+      $products = Product::all();
+      return view("products.index", [
+        "products" => $products
       ]);
     }
     public function handleProducts()
@@ -52,7 +51,9 @@ class ProductController extends Controller
       $product->description = $request->input("description");
       $product->price = $request->input("price");
       $product->save();
-      return redirect()->route('products.index');
+      return redirect()->route('products.create')->with('success', true)->with('message','Produkten '. $product->title . ' har lagt till!');
+
+      //return redirect()->route('products.index');
     }
 
     /**

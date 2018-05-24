@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\OrderInProg;
 class OrderInProgController extends Controller
 {
     /**
@@ -13,7 +13,10 @@ class OrderInProgController extends Controller
      */
     public function index()
     {
-        //
+      $orderInProgs = OrderInProg::all();
+      return view("orderProg.index", [
+        "orderinProgs" => $orderInProgs
+      ]);
     }
 
     /**
@@ -68,7 +71,22 @@ class OrderInProgController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $orderinprg = OrderInProg::find($id);
+      $orderinprg->title = $request->input("title");
+      if(is_null($request->input("image"))){
+        $orderinprg->image =$orderinprg->image;
+      }
+      else {
+        $orderinprg->image = $request->input("image");
+      }
+      if(is_null($request->input("description"))){
+        $orderinprg->description = $orderinprg->description;
+      }
+      else {
+          $orderinprg->description = $request->input("description");
+      }
+      $orderinprg->save();
+      return redirect()->route('home')->with('updateprocess', true)->with('message','Order processen '. $orderinprg->id . ' har uppdaterats');
     }
 
     /**

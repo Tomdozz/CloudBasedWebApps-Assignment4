@@ -29,7 +29,7 @@
             <a class="nav-link" href="{{ route('ordersinprog.index') }}">Nuvarande jobb<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{{ route('orders.index') }}">Lägg order<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{ route('orders.create') }}">Lägg order<span class="sr-only">(current)</span></a>
           </li>
           @auth
           <!--<li class="nav-item active">

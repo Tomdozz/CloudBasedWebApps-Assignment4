@@ -14,10 +14,6 @@ a:hover {
 }
 
 </style>
-<?php
-  $order = $orders->slice(2);
-?>
-
 <div class="container">
   <div class="row">
     <div class="col-md-2 border">
@@ -33,12 +29,36 @@ a:hover {
         <a class="" href="{{ route('products.create') }}">Skapa ny produkt<span class="sr-only">(current)</span></a>
         <hr>
         <a class="" href="{{ route('editPage') }}" >Hantera produkter<span class="sr-only">(current)</span></a>
-        <hr>
+        <!--<hr>
         <a class="" href="{{ route('orders.index') }}" >Hantera produkter<span class="sr-only">(current)</span></a>
-        <hr>
+        <hr>-->
         <!--<a class="" href="{{ route('products.create') }}">Redigera order<span class="sr-only">(current)</span></a>-->
     </div>
     <div class="col-md-10">
+      @if(Session::has('update'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Yay!</strong> {{ Session::get('message', '') }}
+        </div>
+      @endif
+      @if(Session::has('delete'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{ Session::get('message', '') }}
+        </div>
+      @endif
+      @if(Session::has('updateprocess'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Yay!</strong> {{ Session::get('message', '') }}
+        </div>
+      @endif
+      @if(Session::has('updatecost'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Yay!</strong> {{ Session::get('message', '') }}
+        </div>
+      @endif
       <ul class="list-group">
         @foreach ($orders as $order)
           <li class="list-group-item">
@@ -48,9 +68,49 @@ a:hover {
             <i>Telefonnummer: {{$order->phonenumber}}</i><br>
             <i>E-post: {{$order->email}}</i><br>
             <p>Berskrivning från beställare: {{$order->description}}</p>
-            <a class="btn btn-primary" data-toggle="collapse" href="#updateProcess" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Uppdatera denna process</a>
-            <a class="btn btn-primary" data-toggle="collapse" href="#updateCost" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Uppdatera kostnader</a>
-            <div class="collapse multi-collapse" id="updateProcess">
+            <a class="btn btn-primary" data-toggle="collapse" href="#updateProcess{{$order->id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Uppdatera denna process</a>
+            <a class="btn btn-primary" data-toggle="collapse" href="#updateCost{{$order->id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Uppdatera kostnader</a>
+            <a class="btn btn-primary" data-toggle="collapse" href="#editProduct{{$order->id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Uppdatera order</a>
+            <div class="collapse multi-collapse" id="editProduct{{$order->id}}">
+              <div class="card card-body">
+                <h5>Uppdatera denna Order</h5>
+                <form action="{{ route('orders.update', ['order' => $order->id]) }}" method="POST">
+                  @method('PUT')
+                  @csrf
+                  <div class="form-group">
+                    <label for="title">Ändra orders titel</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{$order->title}}" placeholder="{{$order->title}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Ändra referensbild</label>
+                    <input type="text" class="form-control" id="image" name="image" value="{{$order->image}}" placeholder="{{$order->image}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Uppdatera beskrivning</label>
+                    <input type="text" class="form-control" id="description" name="description" value="{{$order->description}}" placeholder="{{$order->description}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Ändra beställarens namn</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{$order->name}}" placeholder="{{$order->name}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Ändra beställarens emailadress</label>
+                    <input type="text" class="form-control" id="email" name="email" value="{{$order->email}}" placeholder="{{$order->email}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Ändra beställarens phonenumber</label>
+                    <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="{{$order->phonenumber}}" placeholder="{{$order->phonenumber}}">
+                  </div>
+                  <button type="submit" class="btn btn-success button-padding">Uppdatera produkt</button>
+                </form>
+                <form action="{{ route('orders.destroy', ['product' => $order->id]) }}" method="post">
+                  @method('DELETE')
+                  @csrf
+                  <button type="submit" class="btn btn-success button-padding">Ta bort denna order</button>
+                </form>
+              </div>
+            </div>
+            <div class="collapse multi-collapse" id="updateProcess{{$order->id}}">
               <div class="card card-body">
                 <h5>Uppdatera denna process</h5>
                 <form action="{{route('ordersinprog.update', ['orderinprogs' => $order->orderInProg->id])}}" method="post">
@@ -73,7 +133,7 @@ a:hover {
                 <hr>
               </div>
             </div>
-            <div class="collapse multi-collapse" id="updateCost">
+            <div class="collapse multi-collapse" id="updateCost{{$order->id}}">
               <div class="card card-body">
                 <h5>Uppdatera arbetstid och kostnad</h5>
                 <form action="{{route('cost.update', ['cost' => $order->costs->id])}}" method="post">
