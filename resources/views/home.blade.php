@@ -59,6 +59,7 @@ a:hover {
         <strong>Yay!</strong> {{ Session::get('message', '') }}
         </div>
       @endif
+      <h3>Hantera dina ordrar här:</h3>
       <ul class="list-group">
         @foreach ($orders as $order)
           <li class="list-group-item">
