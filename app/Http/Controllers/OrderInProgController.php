@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\OrderInProg;
+use Illuminate\Http\Response;
 class OrderInProgController extends Controller
 {
+  public function __construct(){
+    $this->middleware('auth', ['except' => ['index', 'show']]);
+  }
     /**
      * Display a listing of the resource.
      *
@@ -13,10 +17,12 @@ class OrderInProgController extends Controller
      */
     public function index()
     {
-      $orderInProgs = OrderInProg::all();
-      return view("orderProg.index", [
-        "orderinProgs" => $orderInProgs
-      ]);
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
+      //$orderInProgs = OrderInProg::all();
+      //return view("orderProg.index", [
+      //  "orderinProgs" => $orderInProgs
+      //]);
     }
 
     /**
@@ -26,7 +32,8 @@ class OrderInProgController extends Controller
      */
     public function create()
     {
-        //
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
     }
 
     /**
@@ -37,7 +44,8 @@ class OrderInProgController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
     }
 
     /**
@@ -48,7 +56,8 @@ class OrderInProgController extends Controller
      */
     public function show($id)
     {
-        //
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
     }
 
     /**
@@ -59,7 +68,8 @@ class OrderInProgController extends Controller
      */
     public function edit($id)
     {
-        //
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
     }
 
     /**
@@ -97,6 +107,7 @@ class OrderInProgController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
     }
 }

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Order;
 use App\Product;
 use App\Cost;
 use App\OrderInProg;
 class OrderController extends Controller
 {
+    public function __construct(){
+      $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -70,8 +74,6 @@ class OrderController extends Controller
       $orderinprog->save();
 
       return redirect()->route('orders.create')->with('success', true)->with('message','Din order är registrerad!');
-
-      //return redirect()->route('orders.create');
     }
 
     /**
@@ -82,7 +84,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
     }
 
     /**
@@ -93,7 +97,8 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+      $response = new Response();
+      return $response->setStatusCode(501, 'not implementd!');
     }
 
     /**
