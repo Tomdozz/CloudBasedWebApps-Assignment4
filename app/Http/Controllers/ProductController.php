@@ -67,10 +67,17 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-      $product = Product::find($id);
-      return view("products.show", [
-        "product" => $product
-      ]);
+      try{
+        $product = Product::findOrFail($id);
+        \Log::info("Testing Try");
+        return view("products.show", [
+          "product" => $product
+        ]);
+      } catch(Exception $e){
+        report($e);
+        \Log::info("Testing Catch");
+      }
+      print_r("Test");
     }
 
     /**
