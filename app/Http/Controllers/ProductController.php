@@ -59,7 +59,7 @@ class ProductController extends Controller
       $product->description = $request->input("description");
       $product->price = $request->input("price");
       $product->save();
-      return redirect()->route('products.create')->with('success', true)->with('message','Produkten '. $product->title . ' har lagt till!');
+      return redirect()->route('products.create')->with('success', true)->with('message','Produkten '. $product->title . ' har lagts till!');
 
       //return redirect()->route('products.index');
     }
@@ -76,7 +76,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
       }
       catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return view("errors.404", ["exception" => $exception]);
+        return view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+        "errorMessage"=>"Tyvärr produkten finns inte!", "errorCode" => "404"]);
+        //->with('error',true)->with('message','Produkten du letar efter finns inte!');
       }
       return view("products.show", [
         "product" => $product
