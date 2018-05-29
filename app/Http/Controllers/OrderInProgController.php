@@ -17,8 +17,8 @@ class OrderInProgController extends Controller
      */
     public function index()
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      return abort(404);
+    ////  return $response->setStatusCode(501, 'not implementd!');
       //$orderInProgs = OrderInProg::all();
       //return view("orderProg.index", [
       //  "orderinProgs" => $orderInProgs
