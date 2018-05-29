@@ -8,6 +8,7 @@ use App\Exceptions\Handler;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent;
 use Exception;
+
 class ProductController extends Controller
 {
   public function __construct(){
@@ -73,12 +74,9 @@ class ProductController extends Controller
     {
       try{
         $product = Product::findOrFail($id);
-
-      } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        //report($e);
-        \Log::info("Testing Catch");
-        return view("errors.404");//, ["exception"=>$exception]);
-        //return back()->withError($e->getMessage())->withInput();
+      }
+      catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return view("errors.404", ["exception" => $exception]));
       }
       return view("products.show", [
         "product" => $product
@@ -105,7 +103,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $product = Product::find($id);
+      $product = Product::findOrFail($id);
       $product->title = $request->input("title");
       $product->image = $request->input("image");
       $product->description = $request->input("description");
