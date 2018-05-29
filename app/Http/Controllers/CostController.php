@@ -69,7 +69,8 @@ class CostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $costs = Cost::find($id);
+      try{
+        $costs = Cost::findOrFail($id);
 
         $costs->worktime = $request->input("worktime") + $costs->worktime ;
         $costs->meterialcost = $request->input("material") + $costs->meterialcost ;
@@ -82,9 +83,13 @@ class CostController extends Controller
         }
         $costs->totalcost = (($costs->hourcost * $costs->worktime) + $costs->meterialcost);
         $costs->save();
-        return redirect()->route('home')->with('updatecost', true)->with('message',' Du har uppdaterat kostnaden för en order. Den totala arbetstiden är nu '
-        . $costs->worktime . 'timmar. Total matatrialkostnad är: ' . $costs->meterialcost . ' kr. Detta resulterar i en totalkostnad på '
-        . $costs->totalcost . 'kr.' );
+      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return view("errors.404", ["exception" => $exception]);
+      }
+
+      return redirect()->route('home')->with('updatecost', true)->with('message',' Du har uppdaterat kostnaden för en order. Den totala arbetstiden är nu '
+      . $costs->worktime . 'timmar. Total matatrialkostnad är: ' . $costs->meterialcost . ' kr. Detta resulterar i en totalkostnad på '
+      . $costs->totalcost . 'kr.' );
     }
 
     /**
