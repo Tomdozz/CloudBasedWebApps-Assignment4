@@ -34,6 +34,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        \Log::info("Testing Try report");
         parent::report($exception);
     }
 
@@ -46,6 +47,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+      if ($exception instanceof CustomException) {
+        return response()->view('errors.404', [], 200);
+      }
         return parent::render($request, $exception);
     }
 }

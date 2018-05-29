@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Exceptions\Handler;
+use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent;
+use Exception;
 class ProductController extends Controller
 {
   public function __construct(){
@@ -69,15 +73,16 @@ class ProductController extends Controller
     {
       try{
         $product = Product::findOrFail($id);
-        \Log::info("Testing Try");
-        return view("products.show", [
-          "product" => $product
-        ]);
-      } catch(Exception $e){
-        report($e);
+
+      } catch( \Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        //report($e);
         \Log::info("Testing Catch");
+        return view("errors.404");//, ["exception"=>$exception]);
+        //return back()->withError($e->getMessage())->withInput();
       }
-      print_r("Test");
+      return view("products.show", [
+        "product" => $product
+      ]);
     }
 
     /**
