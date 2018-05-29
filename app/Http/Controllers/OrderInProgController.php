@@ -11,13 +11,13 @@ class OrderInProgController extends Controller
     $this->middleware('auth', ['except' => ['index', 'show']]);
   }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.l
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-      return abort(404);
+      return abort(404, "det är fel din jävla SoapFault");
     ////  return $response->setStatusCode(501, 'not implementd!');
       //$orderInProgs = OrderInProg::all();
       //return view("orderProg.index", [
