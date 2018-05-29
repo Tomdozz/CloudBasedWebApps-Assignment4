@@ -105,12 +105,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $product = Product::findOrFail($id);
-      $product->title = $request->input("title");
-      $product->image = $request->input("image");
-      $product->description = $request->input("description");
-      $product->price = $request->input("price");
-      $product->save();
+      try{
+        $product = Product::findOrFail($id);
+        $product->title = $request->input("title");
+        $product->image = $request->input("image");
+        $product->description = $request->input("description");
+        $product->price = $request->input("price");
+        $product->save();
+      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return view("errors.404", ["exception" => $exception]);
+      }
       return redirect()->route('products.create');
     }
     /**
@@ -121,6 +125,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+      try{
+        $product = Product::findOrFail($id);
+      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return view("errors.404", ["exception" => $exception]);
+      }
       Product::destroy($id);
       return redirect()->route('products.create');
     }
