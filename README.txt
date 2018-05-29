@@ -1,1 +1,1 @@
-A small backend application, a store made with laravel
+A small backend application, a store made with laravel. v1
