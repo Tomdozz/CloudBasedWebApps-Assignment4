@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\User;
 
 class UserTest extends TestCase
 {
@@ -15,8 +16,13 @@ class UserTest extends TestCase
      */
     public function testExample()
     {
-        $this->assertTrue(true);
-        $hampusarful = $this->get('/ordersinprog');
-        $hampusarful->assertStatus(200);
+        $user = factory(User::class)->create();
+
+        $response = $this->actingAs($user)         // Model to act as tester
+                 ->withSession(['foo' => 'bar'])  // load session with data here
+                 ->get('/editProduct');          // the view to test
+
+
+        
     }
 }
