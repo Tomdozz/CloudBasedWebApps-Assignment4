@@ -34,6 +34,12 @@ a:hover {
         <!--<a class="" href="{{ route('products.create') }}">Redigera order<span class="sr-only">(current)</span></a>-->
     </div>
     <div class="col-md-10">
+      @if(Session::has('removed'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Yay!</strong> {{ Session::get('message', '') }}
+        </div>
+      @endif
       <ul class="list-group">
       @foreach ($products as $product)
         <li class="list-group-item">

@@ -17,7 +17,8 @@ class OrderInProgController extends Controller
      */
     public function index()
     {
-      return abort(404, "det är fel din jävla SoapFault");
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     ////  return $response->setStatusCode(501, 'not implementd!');
       //$orderInProgs = OrderInProg::all();
       //return view("orderProg.index", [
@@ -32,8 +33,8 @@ class OrderInProgController extends Controller
      */
     public function create()
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -44,8 +45,8 @@ class OrderInProgController extends Controller
      */
     public function store(Request $request)
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -56,8 +57,8 @@ class OrderInProgController extends Controller
      */
     public function show($id)
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -68,8 +69,8 @@ class OrderInProgController extends Controller
      */
     public function edit($id)
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -107,7 +108,7 @@ class OrderInProgController extends Controller
      */
     public function destroy($id)
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 }

@@ -76,8 +76,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
       }
       catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
-        "errorMessage"=>"Tyvärr produkten finns inte!", "errorCode" => "404"]);
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+        "errorMessage"=>"Tyvärr produkten finns inte!", "errorCode" => "404"])->setStatusCode(404);
         //->with('error',true)->with('message','Produkten du letar efter finns inte!');
       }
       return view("products.show", [
@@ -113,9 +113,11 @@ class ProductController extends Controller
         $product->price = $request->input("price");
         $product->save();
       } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return view("errors.404", ["exception" => $exception]);
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+          "errorMessage"=>"Något gick snett kolla så att du gjorde rätt!", "errorCode" => "1"])->setStatusCode(200);
+        //return view("errors.404", ["exception" => $exception]);
       }
-      return redirect()->route('products.create');
+      return redirect()->route('editPage')->with('removed', true)->with('message','Produkt uppdaterad');
     }
     /**
      * Remove the specified resource from storage.
@@ -128,9 +130,10 @@ class ProductController extends Controller
       try{
         $product = Product::findOrFail($id);
       } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return view("errors.404", ["exception" => $exception]);
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+        "errorMessage"=>"Produkten du vill ta bort finns inte", "errorCode" => "404"])->setStatusCode(404);
       }
       Product::destroy($id);
-      return redirect()->route('products.create');
+      return redirect()->route('editPage')->with('removed', true)->with('message','En produkt har tagits bort');
     }
 }

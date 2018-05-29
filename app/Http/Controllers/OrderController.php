@@ -11,7 +11,7 @@ use App\OrderInProg;
 class OrderController extends Controller
 {
     public function __construct(){
-      $this->middleware('auth', ['except' => ['index', 'show']]);
+      $this->middleware('auth', ['except' => ['index', 'show', 'create']]);
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +26,6 @@ class OrderController extends Controller
         "orders" => $order
       ]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +33,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-      return view("orders.create");
+      return response()->view("orders.create")->setStatusCode(200);
     }
 
     /**
@@ -54,6 +53,7 @@ class OrderController extends Controller
         $order->name = $request->input("name");
         $order->email = $request->input("email");
         $order->phonenumber = $request->input("phonenumber");
+        $order->save();
 
         $cost = new Cost;
         $cost->order_id = $order->id;
@@ -70,11 +70,12 @@ class OrderController extends Controller
         $orderinprog->description = " ";
         $orderinprog->expecteddate = " ";
         $orderinprog->timesincestart = " ";
+
         $cost->save();
-        $order->save();
         $orderinprog->save();
       } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return view("errors.404", ["exception" => $exception]);
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+        "errorMessage"=>"Något gick snett när du la till en produkt", "errorCode" => ""])->setStatusCode(200);
       }
       return redirect()->route('orders.create')->with('success', true)->with('message','Din order är registrerad!');
     }
@@ -87,8 +88,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      //$response = new Response();
+      return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -99,8 +101,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-      $response = new Response();
-      return $response->setStatusCode(501, 'not implementd!');
+      //$response = new Response();
+      return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -122,7 +125,8 @@ class OrderController extends Controller
         $order->email = $request->input("email");
         $order->phonenumber = $request->input("phonenumber");
       } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return view("errors.404", ["exception" => $exception]);
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+          "errorMessage"=>"Något gick snett kolla så att du gjorde rätt!", "errorCode" => "1"]);
       }
       $order->save();
       return redirect()->route('home')->with('delete', true)->with('message','Order'. $order->id . ' har uppdaterats');
@@ -141,7 +145,8 @@ class OrderController extends Controller
         DB::table('costs')->where('order_id', $id)->delete();
         DB::table('orderinprogs')->where('order_id', $id)->delete();
       } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return view("errors.404", ["exception" => $exception]);
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+          "errorMessage"=>"Inte implementerad än", "errorCode" => "404"])->setStatusCode(404);
       }
 
       return redirect()->route('home')->with('update', true)->with('message','Ordern har tagits bort');
