@@ -22,7 +22,5 @@ class UserTest extends TestCase
                  ->withSession(['foo' => 'bar'])  // load session with data here
                  ->get('/editProduct');          // the view to test
 
-
-        
     }
 }
