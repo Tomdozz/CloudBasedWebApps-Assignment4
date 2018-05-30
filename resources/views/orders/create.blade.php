@@ -56,7 +56,7 @@ a:hover {
               <label for="title">Telefonnummer</label>
               <input type="text" class="form-control" id="phonenumber" name="phonenumber">
             </div>
-            <button type="submit" class="btn btn-success">Lägg order</button>
+            <button type="submit" name="submit" id="submit" class="btn btn-success">Lägg order</button>
         </form>
       </div>
     </div>

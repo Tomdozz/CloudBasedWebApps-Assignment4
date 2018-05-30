@@ -11,7 +11,7 @@ use App\OrderInProg;
 class OrderController extends Controller
 {
     public function __construct(){
-      $this->middleware('auth', ['except' => ['index', 'show', 'create']]);
+      $this->middleware('auth', ['except' => ['index', 'show', 'create','store']]);
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +33,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-      return response()->view("orders.create")->setStatusCode(200);
+      return response()->view("orders.create")->setStatusCode(200 );
     }
 
     /**
@@ -75,9 +75,9 @@ class OrderController extends Controller
         $orderinprog->save();
       } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
         return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
-        "errorMessage"=>"Något gick snett när du la till en produkt", "errorCode" => ""])->setStatusCode(200);
+        "errorMessage"=>"Något gick snett när du la till en produkt", "errorCode" => ""])->setStatusCode(304);
       }
-      return redirect()->route('orders.create')->with('success', true)->with('message','Din order är registrerad!');
+      return redirect()->route('orders.create')->with('success', true)->with('message','Din order är registrerad!')->setStatusCode(201);
     }
 
     /**

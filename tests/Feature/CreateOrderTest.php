@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use Illuminate\Foundation\Testing\CrawlerTrait;
+use Illuminate\Support\Facades\Storage;
 
 class CreateOrderTest extends TestCase
 {
@@ -16,22 +18,18 @@ class CreateOrderTest extends TestCase
      */
     public function testExample()
     {
-      $this->assertTrue(true);
-
-      /*
+      Storage::fake('public');
       $user = factory(User::class)->create();
-
-      $request = $this->actingAs($user)->json('GET', '/orders/create', [
+      //$this->assertTrue(true);
+       $input = [
         'title' => 'Sallet',
         'image' => 'https://www.google.com',
-        'description' => 'Tom+Sara',
-        'maxprice' => '10',
-        'name' => '=sant',
-        'email' => 'lovein@air.com',
-        'phonenumber' => '123'
-      ]);
-
-      $request->assertStatus(200)->assertJson([ 'created' => true ]);
-      */
+        'description' => 'Testdata',
+        'name' => '=testName',
+        'email' => 'test@air.com',
+        'price' => 1234,
+        'phonenumber' => 123];
+        //$this->actingAs($user)
+        $this->postJson(route('orders.store'), $input)->assertStatus(201);
     }
 }
