@@ -59,7 +59,7 @@ class ProductController extends Controller
       $product->description = $request->input("description");
       $product->price = $request->input("price");
       $product->save();
-      return redirect()->route('products.create')->with('success', true)->with('message','Produkten '. $product->title . ' har lagts till!');
+      return redirect()->route('products.create')->with('success', true)->with('message','Produkten '. $product->title . ' har lagts till!')->setStatusCode(201);
 
       //return redirect()->route('products.index');
     }
@@ -114,10 +114,10 @@ class ProductController extends Controller
         $product->save();
       } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
         return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
-          "errorMessage"=>"Något gick snett kolla så att du gjorde rätt!", "errorCode" => "1"])->setStatusCode(200);
+          "errorMessage"=>"Något gick snett kolla så att du gjorde rätt!", "errorCode" => "1"])->setStatusCode(404);
         //return view("errors.404", ["exception" => $exception]);
       }
-      return redirect()->route('editPage')->with('removed', true)->with('message','Produkt uppdaterad');
+      return redirect()->route('editPage')->with('removed', true)->with('message','Produkt uppdaterad')->setStatusCode(200);
     }
     /**
      * Remove the specified resource from storage.
@@ -134,6 +134,6 @@ class ProductController extends Controller
         "errorMessage"=>"Produkten du vill ta bort finns inte", "errorCode" => "404"])->setStatusCode(404);
       }
       Product::destroy($id);
-      return redirect()->route('editPage')->with('removed', true)->with('message','En produkt har tagits bort');
+      return redirect()->route('editPage')->with('removed', true)->with('message','En produkt har tagits bort')->setStatusCode(200);
     }
 }

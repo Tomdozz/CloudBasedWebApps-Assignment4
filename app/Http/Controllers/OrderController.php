@@ -73,7 +73,7 @@ class OrderController extends Controller
 
         $cost->save();
         $orderinprog->save();
-      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+      } catch(Exception $exception){
         return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
         "errorMessage"=>"Något gick snett när du la till en produkt", "errorCode" => ""])->setStatusCode(304);
       }
@@ -124,12 +124,14 @@ class OrderController extends Controller
         $order->name = $request->input("name");
         $order->email = $request->input("email");
         $order->phonenumber = $request->input("phonenumber");
-      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
-        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
-          "errorMessage"=>"Något gick snett kolla så att du gjorde rätt!", "errorCode" => "1"]);
+              $order->save();
       }
-      $order->save();
-      return redirect()->route('home')->with('delete', true)->with('message','Order'. $order->id . ' har uppdaterats');
+       catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+          "errorMessage"=>"Något gick snett kolla så att du gjorde rätt!", "errorCode" => "1"])->setStatusCode(404);
+      }
+
+      return redirect()->route('home')->with('delete', true)->with('message','Order'. $order->id . ' har uppdaterats')->setStatusCode(200);
     }
 
     /**

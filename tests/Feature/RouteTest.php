@@ -26,7 +26,7 @@ class RouteTest extends TestCase
           '/products',
           '/orders',
           '/products/1',
-          //'/orders/create',
+          '/orders/create',
           '/login',
           '/register'
         ];

@@ -32,4 +32,18 @@ class CreateOrderTest extends TestCase
         //$this->actingAs($user)
         $this->postJson(route('orders.store'), $input)->assertStatus(201);
     }
+    public function testFalseData(){
+      Storage::fake('public');
+      $user = factory(User::class)->create();
+      //$this->assertTrue(true);
+       $input = [
+        'title' => 'Sallet',
+        'image' => 'https://www.google.com',
+        'description' => 'Testdata',
+        'name' => '=testName',
+        'email' => 'test@air.com',
+        'phonenumber' => 123];
+        //$this->actingAs($user)
+        $this->postJson(route('orders.store'), $input)->assertStatus(500);
+    }
 }
