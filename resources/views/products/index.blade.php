@@ -8,7 +8,6 @@
           <h3>{{$product->title}}</h3>
           <img src="{{$product->image}}" alt="{{$product->title}}" style="max-width: 200px">
           <form action="{{ route('products.show', ['product' => $product->id]) }}" method="GET">
-            @csrf
             <button type="submit" class="btn btn-success">läs mer</button>
           </form>
         </li>

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Exceptions\Handler;
+use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent;
+use Exception;
+
 class ProductController extends Controller
 {
   public function __construct(){
@@ -54,7 +59,7 @@ class ProductController extends Controller
       $product->description = $request->input("description");
       $product->price = $request->input("price");
       $product->save();
-      return redirect()->route('products.create')->with('success', true)->with('message','Produkten '. $product->title . ' har lagt till!');
+      return redirect()->route('products.create')->with('success', true)->with('message','Produkten '. $product->title . ' har lagts till!')->setStatusCode(201);
 
       //return redirect()->route('products.index');
     }
@@ -69,15 +74,15 @@ class ProductController extends Controller
     {
       try{
         $product = Product::findOrFail($id);
-        \Log::info("Testing Try");
-        return view("products.show", [
-          "product" => $product
-        ]);
-      } catch(Exception $e){
-        report($e);
-        \Log::info("Testing Catch");
       }
-      print_r("Test");
+      catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+        "errorMessage"=>"Tyvärr produkten finns inte!", "errorCode" => "404"])->setStatusCode(404);
+        //->with('error',true)->with('message','Produkten du letar efter finns inte!');
+      }
+      return view("products.show", [
+        "product" => $product
+      ]);
     }
 
     /**
@@ -100,13 +105,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $product = Product::find($id);
-      $product->title = $request->input("title");
-      $product->image = $request->input("image");
-      $product->description = $request->input("description");
-      $product->price = $request->input("price");
-      $product->save();
-      return redirect()->route('products.create');
+      try{
+        $product = Product::findOrFail($id);
+        $product->title = $request->input("title");
+        $product->image = $request->input("image");
+        $product->description = $request->input("description");
+        $product->price = $request->input("price");
+        $product->save();
+      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+          "errorMessage"=>"Något gick snett kolla så att du gjorde rätt!", "errorCode" => "1"])->setStatusCode(404);
+        //return view("errors.404", ["exception" => $exception]);
+      }
+      return redirect()->route('editPage')->with('removed', true)->with('message','Produkt uppdaterad')->setStatusCode(200);
     }
     /**
      * Remove the specified resource from storage.
@@ -116,7 +127,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+      try{
+        $product = Product::findOrFail($id);
+      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return response()->view("errors.generalerror", ["exceptionMessage" => $exception->getMessage() ,
+        "errorMessage"=>"Produkten du vill ta bort finns inte", "errorCode" => "404"])->setStatusCode(404);
+      }
       Product::destroy($id);
-      return redirect()->route('products.create');
+      return redirect()->route('editPage')->with('removed', true)->with('message','En produkt har tagits bort')->setStatusCode(200);
     }
 }

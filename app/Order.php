@@ -13,4 +13,13 @@ class Order extends Model
   public function costs(){
     return $this->hasOne('App\Cost');
   }
+  protected $fillable = [
+    'title',
+    'image',
+    'description',
+    'price',
+    'name',
+    'email',
+    'phonenumber'
+];
 }

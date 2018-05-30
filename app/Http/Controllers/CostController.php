@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Cost;
 
 class CostController extends Controller
@@ -14,7 +15,8 @@ class CostController extends Controller
      */
     public function index()
     {
-        //
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -24,7 +26,8 @@ class CostController extends Controller
      */
     public function create()
     {
-        //
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -35,7 +38,8 @@ class CostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -46,7 +50,8 @@ class CostController extends Controller
      */
     public function show($id)
     {
-        //
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -57,7 +62,8 @@ class CostController extends Controller
      */
     public function edit($id)
     {
-        //
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 
     /**
@@ -69,7 +75,8 @@ class CostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $costs = Cost::find($id);
+      try{
+        $costs = Cost::findOrFail($id);
 
         $costs->worktime = $request->input("worktime") + $costs->worktime ;
         $costs->meterialcost = $request->input("material") + $costs->meterialcost ;
@@ -82,9 +89,14 @@ class CostController extends Controller
         }
         $costs->totalcost = (($costs->hourcost * $costs->worktime) + $costs->meterialcost);
         $costs->save();
-        return redirect()->route('home')->with('updatecost', true)->with('message',' Du har uppdaterat kostnaden för en order. Den totala arbetstiden är nu '
-        . $costs->worktime . 'timmar. Total matatrialkostnad är: ' . $costs->meterialcost . ' kr. Detta resulterar i en totalkostnad på '
-        . $costs->totalcost . 'kr.' );
+      } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+        return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+        "errorMessage"=>"Ordern hittades inte", "errorCode" => "404"])->setStatusCode(404);
+      }
+
+      return redirect()->route('home')->with('updatecost', true)->with('message',' Du har uppdaterat kostnaden för en order. Den totala arbetstiden är nu '
+      . $costs->worktime . 'timmar. Total matatrialkostnad är: ' . $costs->meterialcost . ' kr. Detta resulterar i en totalkostnad på '
+      . $costs->totalcost . 'kr.' );
     }
 
     /**
@@ -95,6 +107,7 @@ class CostController extends Controller
      */
     public function destroy($id)
     {
-        //
+      return response()->view("errors.generalerror", ["exceptionMessage" => "" ,
+      "errorMessage"=>"Inte implementerad än", "errorCode" => "501"])->setStatusCode(501);
     }
 }

@@ -44,19 +44,19 @@ a:hover {
             @csrf
             <div class="form-group">
               <label for="title">Ge din produkt ett namn</label>
-              <input type="text" class="form-control" id="title" name="title">
+              <input type="text" class="form-control" id="title" name="title" required="required">
             </div>
             <div class="form-group">
               <label for="title">Lägg till en exempelbild</label>
-              <input type="text" class="form-control" id="image" name="image">
+              <input type="text" class="form-control" id="image" name="image" required="required">
             </div>
             <div class="form-group">
               <label for="title">Beskriv produkten</label>
-              <input type="text" class="form-control" id="description" name="description">
+              <input type="text" class="form-control" id="description" name="description" required="required">
             </div>
             <div class="form-group">
               <label for="title">Sätt pris</label>
-              <input type="number" class="form-control" id="price" name="price">
+              <input type="number" class="form-control" id="price" name="price" required="required">
             </div>
             <button type="submit" class="btn btn-success">Spara produkt</button>
         </form>
