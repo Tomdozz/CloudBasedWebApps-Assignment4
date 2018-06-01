@@ -8,16 +8,15 @@ php:
 - 7.2
 before_script:
 - cp .env.production .env
-- mysql -e 'CREATE DATABASE assignment4;'
+- php artisan key:generate
+- php artisan migrate
+- php artisan db:seed
 services:
 - mysql
 install:
 - composer install
 script:
-- php artisan key:generate
 - phpunit --configuration phpunit.xml --coverage-text
-- php artisan migrate
-- php artisan db:seed
 deploy:
   provider: azure_web_apps
   verbose: true
