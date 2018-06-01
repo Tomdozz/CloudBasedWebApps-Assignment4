@@ -8,7 +8,7 @@ php:
 - 7.2
 before_script:
 - php artisan key:generate
-- php artisan migration 
+- php artisan migrate 
 - php artisan db:seed
 before_install:
 - mysql -e 'CREATE DATABASE assignment4;'
