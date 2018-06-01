@@ -7,16 +7,16 @@ language: php
 php:
 - 7.2
 before_script:
-- php artisan key:generate
-- php artisan migrate 
-- php artisan db:seed
-before_install:
+- cp .env.testing .env
 - mysql -e 'CREATE DATABASE assignment4;'
+- php artisan migrate
+- php artisan db:seed
 services:
 - mysql
 install:
 - composer install
 script:
+- php artisan key:generate
 - phpunit --configuration phpunit.xml --coverage-text
 deploy:
   provider: azure_web_apps
