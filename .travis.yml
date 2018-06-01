@@ -7,7 +7,7 @@ language: php
 php:
 - 7.2
 before_script:
-- cp .env.testing .env
+- cp .env.production .env
 - mysql -e 'CREATE DATABASE assignment4;'
 services:
 - mysql
