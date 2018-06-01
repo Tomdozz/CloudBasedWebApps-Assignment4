@@ -1,0 +1,27 @@
+os:
+- linux
+cache:
+  directories:
+  - "$HOME/.composer/cache"
+language: php
+php:
+- 7.2
+before_script:
+- cp .env.travis .env
+- php artisan key:generate
+- php artisan migration 
+- php artisan db:seed
+before_install:
+- mysql -e 'CREATE DATABASE assignment4;'
+services:
+- mysql
+install:
+- composer install
+script:
+- phpunit --configuration phpunit.xml --coverage-text
+deploy:
+  provider: azure_web_apps
+  verbose: true
+notifications:
+  email:
+    recipients: tom_1995@msn.com
