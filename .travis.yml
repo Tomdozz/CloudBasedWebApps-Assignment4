@@ -7,7 +7,6 @@ language: php
 php:
 - 7.2
 before_script:
-- cp .env.travis .env
 - php artisan key:generate
 - php artisan migration 
 - php artisan db:seed
