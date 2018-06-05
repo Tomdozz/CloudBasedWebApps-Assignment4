@@ -9,7 +9,7 @@ php:
 before_script:
 - cp .env.production .env
 - php artisan key:generate
-- mysql -e 'CREATE DATABASE ass4;'
+- mysql -e 'CREATE DATABASE IF NOT EXISTS ass4;'
 - php artisan migrate
 - php artisan db:seed
 services:
