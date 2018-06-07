@@ -9,9 +9,8 @@ php:
 before_script:
 - cp .env.production .env
 - php artisan key:generate
-- php artisan config:clear
-- mysql -e 'CREATE DATABASE IF NOT EXISTS assignment4;'
-- php artisan migrate:refresh --seed
+- php artisan migrate
+- pgp artisan db:seed
 services:
 - mysql
 install:
