@@ -7,7 +7,6 @@ language: php
 php:
 - 7.2
 before_script:
-- rm .env
 - cp .env.production .env
 - php artisan key:generate
 - mysql -e 'CREATE DATABASE IF NOT EXISTS assignment4;'
@@ -22,6 +21,9 @@ script:
 deploy:
   provider: azure_web_apps
   verbose: true
+  username: "Smide"
+  password: "ABCabc123!!!"
+  site: "smide-app"
 notifications:
   email:
     recipients: tom_1995@msn.com
