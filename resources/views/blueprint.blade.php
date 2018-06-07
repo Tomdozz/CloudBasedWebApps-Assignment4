@@ -13,7 +13,7 @@
       top: 7px;
     }
     a{
-      color: pink;
+      color: black;
     }
     a:hover {
         color: white;
